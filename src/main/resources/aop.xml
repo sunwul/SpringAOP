@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="TestController" class="sunwul.learning.springaop.controller.TestController"/>
+    <bean id="AopXml" class="sunwul.learning.springaop.aopxml.AopXml"/>
+
+
+    <!--方法1: 为每个通知匹配切点表达式-->
+    <aop:config proxy-target-class="true">
+        <aop:aspect id="aopxml" ref="AopXml">
+            <aop:before pointcut="execution(* sunwul.learning.springaop.controller.TestController.*(..))" method="aspectBefore"/>
+            <aop:after pointcut="execution(* sunwul.learning.springaop.controller.TestController.*(..))" method="aspectAfter"/>
+            <aop:after-returning pointcut="execution(* sunwul.learning.springaop.controller.TestController.*(..))" returning="result" method="aspectAfterReturning"/>
+            <aop:after-throwing pointcut="execution(* sunwul.learning.springaop.controller.TestController.*(..))" throwing="ex" method="aspectAfterThrowing"/>
+            <aop:around pointcut="execution(* sunwul.learning.springaop.controller.TestController.*(..))" method="aspectAround"/>
+        </aop:aspect>
+    </aop:config>
+
+    <!--方法2: 声明成切点,供通知引用-->
+    <aop:config proxy-target-class="true">
+        <!--声明成切点-->
+        <aop:pointcut id="point" expression="execution(* sunwul.learning.springaop.controller.TestController.*(..))"/>
+        <!--切面中使用pointcut-ref引用-->
+        <aop:aspect id="aopxml" ref="AopXml">
+            <aop:before pointcut-ref="point" method="aspectBefore"/>
+            <aop:after pointcut-ref="point" method="aspectAfter"/>
+            <aop:after-returning pointcut-ref="point" returning="result" method="aspectAfterReturning"/>
+            <aop:after-throwing pointcut-ref="point" throwing="ex" method="aspectAfterThrowing"/>
+            <aop:around pointcut-ref="point" method="aspectAround"/>
+        </aop:aspect>
+    </aop:config>
+</beans>

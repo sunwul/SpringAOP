@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AOP</title>
+    <script type="text/javascript" src="./jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div style="width: 310px;height: 300px; border: 1px solid red">
+    <button onclick="Get()" style="width: 70px;height: 30px;margin-right: 5px;">Get</button>
+    <button onclick="Post()" style="width: 70px;height: 30px;margin-right: 5px;">Post</button>
+    <button onclick="Put()" style="width: 70px;height: 30px;margin-right: 5px;">put</button>
+    <button onclick="Delete()" style="width: 70px;height: 30px;margin-bottom: 5px;">delete</button>
+    <div id="result" style="width: 300px;height: 250px; border: 1px solid black;">
+    </div>
+</div>
+<script>
+    function Get() {
+        $.ajax({
+            url: '/get',
+            type: 'Get',
+            success: function (res) {
+                append("请求成功!",res);
+            },
+            error: function (error) {
+                append("请求发生错误!",error);
+            }
+        })
+    }
+
+    function Post() {
+        $.ajax({
+            url: '/post',
+            type: 'Post',
+            success: function (res) {
+                append("请求成功!",res)
+            },
+            error: function (error) {
+                append("请求发生错误!",error)
+            }
+        })
+    }
+
+    function Put() {
+        $.ajax({
+            url: '/put',
+            type: 'Put',
+            data: {
+                name: '1111',
+                isLock: true
+            },
+            success: function (res) {
+                append("请求成功!",res)
+            },
+            error: function (error) {
+                append("请求发生错误!",error)
+            }
+        })
+    }
+
+    function Delete() {
+        $.ajax({
+            url: '/delete/1',
+            type: 'Delete',
+            success: function (res) {
+                append("请求成功!",res)
+            },
+            error: function (error) {
+                append("请求发生错误!",error)
+            }
+        })
+    }
+
+    function append(msg, res) {
+        let result = document.getElementById('result')
+        let span1 = document.createElement('span')
+        let span2 = document.createElement('span')
+        let text1 = document.createTextNode('返回结果: \r\n'+res)
+        let text2 = document.createTextNode(msg)
+        span1.appendChild(text2)
+        span2.appendChild(text1)
+        result.appendChild(span1)
+        result.appendChild(document.createElement('br'))
+        result.appendChild(span2)
+        result.appendChild(document.createElement('br'))
+    }
+
+</script>
+</body>
+</html>
