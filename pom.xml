@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>sunwul.learning</groupId>
-    <artifactId>SpringAop</artifactId>
+    <artifactId>SpringAOP</artifactId>
     <version>1.0-SNAPSHOT</version>
 
 
